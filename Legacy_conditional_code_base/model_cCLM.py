@@ -121,7 +121,7 @@ class RNN():
 
 
         for step in range(max_length):
-            logits, hc = self.rnn(x, hc, properties.to(device)) #add physchem shit
+            logits, hc = self.rnn(x, hc, properties.to(device))
             temp = temperature
             prob = F.softmax(logits / temp, dim=1)
             x = torch.multinomial(prob,1).view(-1)
