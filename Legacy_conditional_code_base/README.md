@@ -69,7 +69,7 @@ tokens drawn after a molecule has ended, so its value depends on the batch size.
 
 ## Analysis
 
-`analysis.ipynb` has one cell per analysis; set the `FILE_PATH_HERE` entries at the
+`Section2_analysis.ipynb` can be used to reproduce the numbers from the gCLM and cCLM benchmarking section; set the `FILE_PATH_HERE` entries at the
 top of a cell and run it.
 
 1. Canonicalize a generated set and draw a random sample of 50,000 valid molecules.
