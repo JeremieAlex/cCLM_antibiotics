@@ -147,7 +147,7 @@ if __name__ == "__main__":
                         help='List of property columns to use for training.')
     parser.add_argument('--property_range', type=float, nargs='+', metavar=('LOW', 'HIGH'),
                         help='Property values to seed test generations between epochs')
-    parser.add_argument('--batch_size', type=int, default=64, help='Batch size for training.')
+    parser.add_argument('--batch_size', type=int, default=128, help='Batch size for training.')
     parser.add_argument('--learning_rate', type=float, default=0.0001, help='Learning rate for the optimizer.')
 
     args = parser.parse_args()
