@@ -25,8 +25,7 @@ and kept if they have 11-99 heavy atoms made of C, N, O, F, S, Cl, Br and I.
 Rows with missing property values are dropped.
 
 The configs use `data/October2024_cleaned_chembl_smiles_USA300_preds_LogP_TPSA_MW.csv`
-(ChEMBL with LogP, TPSA, MW and a predicted USA300 activity score), available from
-<!-- TODO: Zenodo DOI -->.
+(ChEMBL with LogP, TPSA, MW and a predicted USA300 activity score), available at https://zenodo.org/records/24407551.
 
 ## Train
 
