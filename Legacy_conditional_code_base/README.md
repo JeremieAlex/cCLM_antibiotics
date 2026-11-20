@@ -31,7 +31,7 @@ python train_cCLM.py \
     --voc_file Voc \
     --property_columns binary_activity \
     --property_range 0.5 1.0 \
-    --batch_size 64 \
+    --batch_size 128 \
     --learning_rate 0.0001
 ```
 
