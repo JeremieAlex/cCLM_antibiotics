@@ -10,7 +10,7 @@ root.
 | `helper_functions.py` | vocabulary, dataset, scaling, canonicalization, early stopping |
 | `train_cCLM.py` | training: scale properties, canonicalize, build the vocabulary, train |
 | `sample_final_cCLM.py` | sampling from a trained checkpoint |
-| `analysis.ipynb` | analysis of generated molecules used for the paper figures |
+| `Section2_analysis.ipynb` | analysis of generated molecules used for the paper figures |
 
 The property vector is scaled with a RobustScaler, embedded to 256 dimensions and
 concatenated to the 256-dimensional token embedding at every step. The scaler is
