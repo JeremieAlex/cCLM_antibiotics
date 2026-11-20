@@ -1,0 +1,35 @@
+# Two-phase training, phase 2: finetune the phase 1 model on labeled data.
+# Architecture and vocabulary come from the checkpoint.
+#   python scripts/finetune_conditional.py --config configs/finetune.toml
+
+[data]
+smiles_file   = "data/October2024_cleaned_chembl_smiles_USA300_preds_LogP_TPSA_MW.csv"   # replace with your labeled set
+smiles_column = "SMILES"
+output_model  = "models/finetuned.ckpt"
+
+pretrained_model = "models/pretrained_blank.ckpt"
+
+[conditioning]
+property_columns = ["binary_activity"]   # count must equal blank_conditioning in pretrain_blank.toml
+scaler_file = "models/finetuned_scaler.pkl"
+conditioning_dropout = 0.05
+
+# Train only the conditioning embedders. Other options:
+#   unfreeze_layers = ["linear"]                  # also train the output layer
+#   unfreeze_epoch  = 10                          # with unfreeze_layers = ["linear", "rnn_3"]
+freeze_backbone = true
+
+[training]
+num_epochs    = 30
+batch_size    = 64
+learning_rate = 1e-4
+lr_step       = 8              # halve LR every N epochs
+lr_gamma      = 0.5
+clip_grad     = 1.0
+randomize_smiles = true
+patience     = 5
+es_threshold = 0.02
+sample_every = 3
+sample_size  = 128
+save_every   = 5
+device       = "auto"

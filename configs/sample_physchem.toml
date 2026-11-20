@@ -1,0 +1,20 @@
+# Sample from the physchem model (train_physchem.toml).
+# property_ranges: LOW HIGH per property, training order, unscaled units.
+# Use "none" in place of a pair to leave a property unspecified.
+#   python scripts/sample.py --config configs/sample_physchem.toml
+
+[model]
+model  = "models/physchem.ckpt"
+n      = 500
+output = "results/physchem_sample.csv"
+
+[sampling]
+mode           = "property"
+batch_size     = 256
+temperature    = 1.0          # <1 sharper, >1 more diverse
+device         = "auto"
+
+[conditioning]
+property_columns = ["LogP", "TPSA", "MW"]
+#                    LogP          TPSA           MW
+property_ranges  = ["2.0", "4.0",  "50", "110",  "300", "450"]

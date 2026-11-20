@@ -1,0 +1,20 @@
+# Same MW sweep as validate_physchem.toml, with the ciprofloxacin scaffold held fixed.
+#   python scripts/validate_conditioning.py --config configs/validate_scaffold.toml
+
+[model]
+model  = "models/scaffold.ckpt"
+output = "results/scaffold_validate_MW_cipro.csv"
+
+[validation]
+property_columns = ["LogP", "TPSA", "MW"]   # training order
+
+sweep_property = "MW"
+sweep_values   = [350, 400, 450, 500, 550]
+fixed          = ["LogP=2.0", "TPSA=75"]
+
+full_molecule  = "O=C(O)c1cn(C2CC2)c2cc(N3CCNCC3)c(F)cc2c1=O"   # ciprofloxacin
+
+n           = 200
+batch_size  = 256
+temperature = 1.0
+device      = "auto"

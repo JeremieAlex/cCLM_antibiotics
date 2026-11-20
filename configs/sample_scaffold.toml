@@ -1,0 +1,22 @@
+# Sample with properties + scaffold (train_scaffold.toml).
+# mode = "scaffold" uses the scaffold only. full_molecule extracts its Murcko scaffold;
+# use scaffold_smiles to give a scaffold directly.
+#   python scripts/sample.py --config configs/sample_scaffold.toml
+
+[model]
+model  = "models/scaffold.ckpt"
+n      = 1000
+output = "results/scaffold_sample_cipro.csv"
+
+[sampling]
+mode        = "property_scaffold"
+batch_size  = 256
+temperature = 1.0
+device      = "auto"
+
+[conditioning]
+property_columns = ["LogP", "TPSA", "MW"]
+#                  LogP        TPSA          MW
+property_ranges  = [1.5, 3.0,  60.0, 90.0,  350.0, 450.0]
+
+full_molecule = "O=C(O)c1cn(C2CC2)c2cc(N3CCNCC3)c(F)cc2c1=O"   # ciprofloxacin

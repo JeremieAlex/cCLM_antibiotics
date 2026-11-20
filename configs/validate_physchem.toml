@@ -1,0 +1,19 @@
+# Validate the physchem model (train_physchem.toml): sweep MW with LogP and TPSA fixed.
+# To sweep another property, change sweep_property/sweep_values and fix MW instead.
+#   python scripts/validate_conditioning.py --config configs/validate_physchem.toml
+
+[model]
+model  = "models/physchem.ckpt"
+output = "results/physchem_validate_MW.csv"
+
+[validation]
+property_columns = ["LogP", "TPSA", "MW"]   # training order
+
+sweep_property = "MW"
+sweep_values   = [300, 350, 400, 450, 500, 550]
+fixed          = ["LogP=2.5", "TPSA=70"]
+
+n           = 200
+batch_size  = 256
+temperature = 1.0
+device      = "auto"

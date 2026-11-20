@@ -1,0 +1,19 @@
+# Sample from the activity model (train_activity.toml), targeting high predicted activity.
+# Score the output with the USA300 chemprop model to check the shift.
+# Low-activity control: --property_ranges 0.0 0.05 --output results/activity_low.csv
+#   python scripts/sample.py --config configs/sample_activity.toml
+
+[model]
+model  = "models/activity.ckpt"
+n      = 1000
+output = "results/activity_high.csv"
+
+[sampling]
+mode        = "property"
+batch_size  = 256
+temperature = 1.0
+device      = "auto"
+
+[conditioning]
+property_columns = ["binary_activity"]
+property_ranges  = [0.6, 0.9]

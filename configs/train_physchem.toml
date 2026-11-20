@@ -1,0 +1,42 @@
+# Property conditioning on LogP, TPSA and MW (start here).
+# The column order defines the conditioning vector; use the same order when sampling.
+# To compute descriptors from SMILES instead: compute_properties = ["LogP", "MW", "QED", "TPSA", "HBD"]
+#   python scripts/train_conditional.py --config configs/train_physchem.toml
+
+[data]
+smiles_file   = "data/October2024_cleaned_chembl_smiles_USA300_preds_LogP_TPSA_MW.csv"
+smiles_column = "SMILES"
+output_model  = "models/physchem.ckpt"
+
+[conditioning]
+property_columns     = ["LogP", "TPSA", "MW"]
+scaler_file          = "models/physchem_scaler.pkl"
+conditioning_dropout = 0.1
+# Per-epoch sampling check: LOW HIGH per property, unscaled
+#                 LogP        TPSA          MW
+property_ranges = [2.0, 4.0,  50.0, 110.0,  300.0, 450.0]
+
+[model]
+cell_type                = "gru"
+layer_size               = 512
+num_layers               = 3
+embedding_size           = 256
+condition_embedding_size = 256
+property_embedder_layers = 4
+dropout                  = 0.0
+max_sequence_length      = 256
+
+[training]
+num_epochs       = 30
+batch_size       = 256
+learning_rate    = 3e-4
+lr_step          = 10
+lr_gamma         = 0.5
+clip_grad        = 1.0
+randomize_smiles = false
+patience         = 5
+es_threshold     = 0.05
+sample_every     = 5
+sample_size      = 128
+save_every       = 5
+device           = "auto"

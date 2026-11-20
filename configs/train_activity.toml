@@ -1,0 +1,44 @@
+# USA300 activity conditioning with the published (legacy) settings:
+# 3x512 LSTM, constant LR 1e-4, no gradient clipping, canonical SMILES.
+# binary_activity is a continuous [0, 1] predicted score, scaled like any scalar.
+# No conditioning dropout, so don't use "none" ranges or vanilla mode with this model.
+#   python scripts/train_conditional.py --config configs/train_activity.toml
+
+[data]
+smiles_file   = "data/October2024_cleaned_chembl_smiles_USA300_preds_LogP_TPSA_MW.csv"
+smiles_column = "SMILES"
+output_model  = "models/activity.ckpt"
+
+[conditioning]
+property_columns     = ["binary_activity"]
+scaler_file          = "models/activity_scaler.pkl"
+conditioning_dropout = 0.0
+no_uncond_val        = true
+property_ranges      = [0.5, 1.0]   # per-epoch sampling check
+
+[model]
+cell_type                = "lstm"
+layer_size               = 512
+num_layers               = 3
+embedding_size           = 256
+condition_embedding_size = 256
+property_embedder_layers = 5     # 6 Linear layers, as legacy
+dropout                  = 0.0
+max_sequence_length      = 256
+
+[training]
+val_split        = 0.15
+num_epochs       = 50
+batch_size       = 128
+learning_rate    = 1e-4
+lr_step          = 10
+lr_gamma         = 1.0       # constant LR
+clip_grad        = 0.0
+randomize_smiles = false
+patience         = 2
+es_threshold     = 0.5
+sample_every     = 1
+sample_size      = 64
+save_every       = 1
+num_workers      = 4
+device           = "auto"
